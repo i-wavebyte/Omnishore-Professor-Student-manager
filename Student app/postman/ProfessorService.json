@@ -1,0 +1,81 @@
+{
+  "info": {
+    "_postman_id": "bdf02104-26d3-45f8-8c20-c7a1532c9e49",
+    "name": "ProfessorController",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Professors",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/professor/getAll",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "professor", "getAll"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Professor by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/professor/get/:id",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "professor", "get", ":id"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Professors from ID List",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/professor/get/list?profIds=",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "professor", "get", "list"],
+          "query": [
+            {
+              "key": "profIds",
+              "value": ""
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Assign Student",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/professor/assign/:id?studentId=",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "professor", "assign", ":id"],
+          "query": [
+            {
+              "key": "studentId",
+              "value": ""
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
