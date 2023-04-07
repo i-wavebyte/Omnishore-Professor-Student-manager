@@ -1,0 +1,124 @@
+{
+	"info": {
+		"_postman_id": "65b469c6-17de-4044-acc2-f1443d3f994e",
+		"name": "Student Link API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26777233"
+	},
+	"item": [
+		{
+			"name": "Get Student by ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer <access_token>"
+					}
+				],
+				"url": {
+					"raw": "http.localhost:8081/studentService/find/{{id}}",
+					"host": [
+						"http",
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"studentService",
+						"find",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Students",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer <access_token>"
+					}
+				],
+				"url": {
+					"raw": "http.localhost:8081/studentService/findAll",
+					"host": [
+						"http",
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"studentService",
+						"findAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Students by List",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer <access_token>"
+					}
+				],
+				"url": {
+					"raw": "http.localhost:8081/studentService/getIdsList?studentIds={{studentIds}}",
+					"host": [
+						"http",
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"studentService",
+						"getIdsList"
+					],
+					"query": [
+						{
+							"key": "studentIds",
+							"value": "{{studentIds}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Assign Professor",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer <access_token>"
+					}
+				],
+				"url": {
+					"raw": "http.localhost:8081/studentService/assignProfessor/{{studentId}}?professorId={{professorId}}",
+					"host": [
+						"http",
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"studentService",
+						"assignProfessor",
+						"{{studentId}}"
+					],
+					"query": [
+						{
+							"key": "professorId",
+							"value": "{{professorId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

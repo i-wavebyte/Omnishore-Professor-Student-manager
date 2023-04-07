@@ -1,0 +1,226 @@
+{
+	"info": {
+		"_postman_id": "3e5a59c3-dcea-480b-9efb-9b0779d04b6f",
+		"name": "Professor API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26777233"
+	},
+	"item": [
+		{
+			"name": "Get Professor",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/professorService/get/{{profId}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"professorService",
+						"get",
+						"{{profId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Professors",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/professorService/get",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"professorService",
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Professor List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/professorService/get/list?profIds={{profIds}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"professorService",
+						"get",
+						"list"
+					],
+					"query": [
+						{
+							"key": "profIds",
+							"value": "{{profIds}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Professor",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"\",\n    \"cin\": \"\",\n    \"subject\": \"\",\n    \"email\": \"\",\n    \"telephone\": \"\",\n    \"etudiants\": []\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/professorService/add",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"professorService",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add All Professors",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n        \"name\": \"\",\n    \"cin\": \"\",\n    \"subject\": \"\",\n    \"email\": \"\",\n    \"telephone\": \"\",\n    \"etudiants\": []\n    }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/professorService/addAll",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"professorService",
+						"addAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Professor",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"\",\n    \"cin\": \"\",\n    \"subject\": \"\",\n    \"email\": \"\",\n    \"telephone\": \"\",\n    \"etudiants\": []\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/professorService/update/{{profId}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"professorService",
+						"update",
+						"{{profId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Assign Student",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/professorService/assign/{{profId}}?studentId={{studentId}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"professorService",
+						"assign",
+						"{{profId}}"
+					],
+					"query": [
+						{
+							"key": "studentId",
+							"value": "{{studentId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Assign Students",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {{studentIds}}\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/professorService/assignAll/{{profId}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"professorService",
+						"assignAll",
+						"{{profId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Professor",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/professorService/delete/{{profId}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"professorService",
+						"delete",
+						"{{profId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

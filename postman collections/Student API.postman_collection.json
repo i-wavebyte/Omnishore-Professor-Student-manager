@@ -1,0 +1,228 @@
+{
+	"info": {
+		"_postman_id": "3a5f824d-a752-406a-a97f-3305c566c0aa",
+		"name": "Student API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26777233"
+	},
+	"item": [
+		{
+			"name": "Find All Students",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http.localhost:8081/studentService/findAll",
+					"host": [
+						"http",
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"studentService",
+						"findAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find Student",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http.localhost:8081/studentService/find/1",
+					"host": [
+						"http",
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"studentService",
+						"find",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Ids List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http.localhost:8081/studentService/idsList?studentIds=1,2,3",
+					"host": [
+						"http",
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"studentService",
+						"idsList"
+					],
+					"query": [
+						{
+							"key": "studentIds",
+							"value": "1,2,3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Student",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"tester\",\"cin\":\"dsgfsgd\",\"Groupe\":\"56\",\"email\":\"tester@gmail.com\",\"telephone\":\"5555555\",\"professors\":[]}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http.localhost:8081/studentService/add",
+					"host": [
+						"http",
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"studentService",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add All Students",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\"id\":null,\"name\":\"\",\"email\":\"\",\"telephone\":\"\",\"professors\":[]}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http.localhost:8081/studentService/addAll",
+					"host": [
+						"http",
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"studentService",
+						"addAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Student",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":1,\"name\":\"\",\"email\":\"\",\"telephone\":\"\",\"professors\":[]}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http.localhost:8081/studentService/update/1",
+					"host": [
+						"http",
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"studentService",
+						"update",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Assign Professor",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http.localhost:8081/studentService/assign/1?profId=1",
+					"host": [
+						"http",
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"studentService",
+						"assign",
+						"1"
+					],
+					"query": [
+						{
+							"key": "profId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Student",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http.localhost:8081/studentService/delete/1",
+					"host": [
+						"http",
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"studentService",
+						"delete",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
