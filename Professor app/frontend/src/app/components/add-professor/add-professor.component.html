@@ -1,0 +1,36 @@
+
+
+  <div class="popup-bg">
+    
+  <div class="add-professor">
+    <button class="close" routerLink="">X</button>
+    <div class="add-professor-container">
+        <h2>Add Professor</h2>
+        <form [formGroup]="addProfessorForm" (ngSubmit)="onSubmit()">
+          <div>
+            <label for="name">Name</label>
+            <input type="text" id="name" formControlName="name" required />
+          </div>
+          <div>
+            <label for="cin">CIN</label>
+            <input type="text" id="cin" formControlName="cin" required />
+          </div>
+          <div>
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" formControlName="subject" required />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" formControlName="email" required />
+          </div>
+          <div>
+            <label for="telephone">Telephone</label>
+            <input type="tel" id="telephone" formControlName="telephone" required />
+          </div>
+          <button type="submit" [disabled]="!addProfessorForm.valid" class="add-button">
+            Add Professor
+          </button>
+        </form>
+      </div>
+  </div>
+</div>

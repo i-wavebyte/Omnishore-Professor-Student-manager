@@ -1,14 +1,25 @@
 package backend.server.service.controllers;
+import backend.server.service.domain.PageResponse;
 import backend.server.service.domain.Professor;
 import backend.server.service.services.IProfessorService;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+
+import static javax.persistence.GenerationType.AUTO;
+
 
 
 @RestController
 @RequestMapping("/professorService")
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 public class ProfessorController {
 
 
@@ -28,8 +39,16 @@ public class ProfessorController {
 
     @PreAuthorize("hasRole('ROLE_PROF_MANAGER') or hasRole('ROLE_STUD_MANAGER')")
     @GetMapping("/get")
-    public List<Professor> getAllProfessor(){
-        return professorService.getAllProfessors();
+    public PageResponse<Professor> getAllProfessors(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "name") String sortBy,
+            @RequestParam(defaultValue = "ASC") String sortOrder,
+            @RequestParam(required = false) String searchQuery,
+            @RequestParam(required = false) String subjectFilter
+    ) {
+        return professorService.getProfessorsPage(page, size, sortBy, sortOrder, searchQuery, subjectFilter);
+
     }
 
 
@@ -79,5 +98,11 @@ public class ProfessorController {
     @PostMapping("/addAll")
     public List<Professor> addAll(@RequestBody List<Professor> professors){
         return professorService.addAll(professors);
+    }
+
+    @PreAuthorize("hasRole('ROLE_PROF_MANAGER') or hasRole('ROLE_STUD_MANAGER')")
+    @GetMapping("/subjects")
+    public List<String> getAllUniqueSubjects() {
+        return professorService.getAllUniqueSubjects();
     }
 }

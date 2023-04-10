@@ -36,6 +36,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.eventBusSub = this.eventBusService.on('logout', () => {
       this.logout();
     });
+    if (!this.isLoggedIn) {
+      this.router.navigate(['/login']);
+    }
   }
 
   ngOnDestroy(): void {

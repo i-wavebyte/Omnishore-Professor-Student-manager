@@ -1,11 +1,14 @@
 package backend.server.service.services;
 
 import backend.server.service.constants.Literals;
+import backend.server.service.domain.PageResponse;
 import backend.server.service.domain.Professor;
 import backend.server.service.repositories.ProfessorRepository;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 // Define the Professor service as a Spring service
 @Transactional
@@ -43,10 +47,37 @@ public class ProfessorService implements IProfessorService {
         return professorRepository.save(p);
     }
 
-    // Implement the getAllProfessors method from the interface
     @Override
     public List<Professor> getAllProfessors() {
         return professorRepository.findAll();
+    }
+
+    // Implement the getAllProfessors method from the interface
+    @Override
+    public PageResponse<Professor> getProfessorsPage(int page, int size, String sortBy, String sortOrder, String searchQuery, String subjectFilter) {
+        Sort.Direction direction = Sort.Direction.fromString(sortOrder);
+        Sort sort = Sort.by(direction, sortBy);
+        int start = page * size;
+        int end = Math.min(start + size, (int) professorRepository.count());
+
+        List<Professor> professors = professorRepository.findAll(sort);
+
+        if (searchQuery != null && !searchQuery.isEmpty()) {
+            professors = professors.stream()
+                    .filter(professor -> professor.getName().toLowerCase().contains(searchQuery.toLowerCase())
+                            || professor.getCin().toLowerCase().contains(searchQuery.toLowerCase())
+                            || professor.getEmail().toLowerCase().contains(searchQuery.toLowerCase())
+                            || professor.getTelephone().toLowerCase().contains(searchQuery.toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+        if (subjectFilter != null && !subjectFilter.isEmpty()) {
+            professors = professors.stream()
+                    .filter(professor -> professor.getSubject().equalsIgnoreCase(subjectFilter))
+                    .collect(Collectors.toList());
+        }
+
+        List<Professor> pageContent = professors.subList(start, Math.min(end, professors.size()));
+        return new PageResponse<>(pageContent, professors.size());
     }
 
     // Implement the getProfessorById method from the interface
@@ -117,6 +148,7 @@ public class ProfessorService implements IProfessorService {
     public List<Professor> addAll(List<Professor> professors) {
         return professorRepository.saveAll(professors);
     }
-
-
+    public List<String> getAllUniqueSubjects() {
+        return professorRepository.findAllUniqueSubjects();
+    }
 }

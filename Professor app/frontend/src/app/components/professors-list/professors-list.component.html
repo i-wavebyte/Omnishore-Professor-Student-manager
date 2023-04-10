@@ -1,0 +1,70 @@
+<div class="bg"></div>
+<h2>Professors List</h2>
+<div class="professors-list-container">
+    <div class="filters">
+        <input [(ngModel)]="searchValue" (input)="onSearch()" placeholder="Search by name, CIN, email or phone" />
+        <select [(ngModel)]="selectedSubject" (ngModelChange)="onSubjectFilterChange($event)">
+            <option value="">All subjects</option>
+            <option *ngFor="let subject of subjects" [value]="subject">
+                {{ subject }}
+            </option>
+        </select>
+        <select [(ngModel)]="nameOrder" (ngModelChange)="onNameOrderChange($event)">
+            <option value="">Order by name</option>
+            <option value="ASC">Name A-Z</option>
+            <option value="DESC">Name Z-A</option>
+        </select>
+        <button routerLink="add-professor" class="add-prof">+ Add professor</button>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>CIN</th>
+                <th>SUBJECT</th>
+                <th>EMAIL</th>
+                <th>PHONE</th>
+                <th>STUDENTS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let professor of filteredProfessors">
+                <td>
+                    <div class="name-info">
+                        <button (click)="onInfoProfessor(professor.id)" class="info">?</button>
+                        <input class="table-data" [(ngModel)]="professor.name" />
+                    </div>
+                    
+                </td>
+                <td>
+                    <input class="table-data" [(ngModel)]="professor.cin" />
+                </td>
+                <td>
+                    <input class="table-data" [(ngModel)]="professor.subject" />
+                </td>
+                <td>
+                    <input class="table-data" [(ngModel)]="professor.email" />
+                </td>
+                <td>
+                    <input class="table-data" [(ngModel)]="professor.telephone" />
+                </td>
+                <td>{{ professor.etudiants.length }}</td>
+                <td class="actions">
+                    <button (click)="onEditProfessor(professor)" class="edit">Edit</button>
+                    <button (click)="onDeleteProfessor(professor.id)" class="delete">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="pagination">
+        <button (click)="prevPage()" [disabled]="page === 0" class="pagination-button">&laquo;</button>
+        <span class="current-page">{{ page + 1 }}</span>
+        <button
+            class="pagination-button"
+            (click)="nextPage()"
+            [disabled]="(page + 1) * pageSize >= totalProfessors"
+        >&raquo;
+        </button>
+    </div>
+</div>
+<router-outlet></router-outlet>

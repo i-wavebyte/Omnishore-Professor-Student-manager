@@ -7,7 +7,18 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+//codegpt do: generate an angular service that communicates with this controller (the controller is at http://localhost:8080, also create an interface Student in typescript to map the objects received from the backend
+//here is the class in java
+//@Data @AllArgsConstructor @NoArgsConstructor
+//public class Student {
+//    private Long id;
+//    private String name;
+//    private String email;
+//    private String telephone;
+//    private String cin;
+//    private String groupe;
+//    private List<Long> professors = new ArrayList<>();
+//}
 @RestController
 @RequestMapping("/studentService")
 @CrossOrigin(origins = "*", maxAge = 3600)

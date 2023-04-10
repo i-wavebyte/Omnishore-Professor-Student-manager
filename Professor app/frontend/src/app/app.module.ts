@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +15,9 @@ import { BoardUserComponent } from './components/board-user/board-user.component
 
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { EventBusService } from './_shared/event-bus.service';
+import { AddProfessorComponent } from './components/add-professor/add-professor.component';
+import { ProfessorsListComponent } from './components/professors-list/professors-list.component';
+import { ProfessorDetailsComponent } from './components/professor-details/professor-details.component';
 
 @NgModule({
   declarations: [
@@ -25,13 +28,17 @@ import { EventBusService } from './_shared/event-bus.service';
     ProfileComponent,
     BoardAdminComponent,
     BoardModeratorComponent,
-    BoardUserComponent
+    BoardUserComponent,
+    AddProfessorComponent,
+    ProfessorsListComponent,
+    ProfessorDetailsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

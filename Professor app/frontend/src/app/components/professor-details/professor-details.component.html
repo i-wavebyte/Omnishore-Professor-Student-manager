@@ -1,0 +1,20 @@
+<div class="bg">
+    <div *ngIf="professor" class="professor-details">
+        <h2>Professor Details</h2>
+        <dl>
+          <dt>Name</dt>
+          <dd>{{ professor.name }}</dd>
+          <dt>CIN</dt>
+          <dd>{{ professor.cin }}</dd>
+          <dt>Subject</dt>
+          <dd>{{ professor.subject }}</dd>
+          <dt>Email</dt>
+          <dd>{{ professor.email }}</dd>
+          <dt>Phone</dt>
+          <dd>{{ professor.telephone }}</dd>
+        </dl>
+        <button routerLink="/home">Return</button>
+      </div>
+      
+</div>
+
