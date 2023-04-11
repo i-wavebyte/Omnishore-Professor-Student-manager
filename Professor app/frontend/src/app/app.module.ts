@@ -18,6 +18,8 @@ import { EventBusService } from './_shared/event-bus.service';
 import { AddProfessorComponent } from './components/add-professor/add-professor.component';
 import { ProfessorsListComponent } from './components/professors-list/professors-list.component';
 import { ProfessorDetailsComponent } from './components/professor-details/professor-details.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { ProfessorDetailsComponent } from './components/professor-details/profes
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatIconModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

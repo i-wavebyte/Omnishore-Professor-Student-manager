@@ -1,7 +1,9 @@
 package backend.server.service.controllers;
 
+import backend.server.service.domain.PageResponse;
 import backend.server.service.domain.Student;
 import backend.server.service.service.IStudentService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,8 +53,17 @@ public class StudentController {
 
     @PreAuthorize("hasRole('ROLE_STUD_MANAGER') or hasRole('ROLE_PROF_MANAGER')")
     @GetMapping("/getIdsList")
-    public List<Student> getIdsList(@RequestParam List<Long> studentIds) {
-        return studentService.getIdsList(studentIds);
+    public ResponseEntity<PageResponse<Student>> getIdsList(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            @RequestParam(value = "sortBy", defaultValue = "id") String sortBy,
+            @RequestParam(value = "sortOrder", defaultValue = "asc") String sortOrder,
+            @RequestParam(value = "searchQuery", required = false) String searchQuery,
+            @RequestParam(value = "groupeFilter", required = false) String groupeFilter,
+            @RequestParam(value = "studentIds", required = false) List<Long> studentIds) {
+
+        PageResponse<Student> result = studentService.getIdsList(page, size, sortBy, sortOrder, searchQuery, groupeFilter, studentIds);
+        return ResponseEntity.ok(result);
     }
 
     @PreAuthorize("hasRole('ROLE_STUD_MANAGER') or hasRole('ROLE_PROF_MANAGER')")

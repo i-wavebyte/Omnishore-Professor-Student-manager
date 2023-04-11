@@ -23,6 +23,8 @@ import java.util.stream.Collectors;
 @Slf4j @Service
 public class ProfessorService implements IProfessorService {
 
+    @Autowired
+    private IStudentService studentService;
     // Inject the Professor repository using Spring's dependency injection
     @Autowired
     private ProfessorRepository professorRepository;
