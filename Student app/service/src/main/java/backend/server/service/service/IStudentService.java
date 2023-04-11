@@ -12,5 +12,4 @@ public interface IStudentService {
     Student findStudent(long id);
     List<Student> getIdsList(List<Long> studentIds);
     Student assignProfessor(Long studentId, Long profId);
-    List<Student> addAll(List<Student> students);
 }
