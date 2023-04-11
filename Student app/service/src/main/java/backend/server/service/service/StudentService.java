@@ -42,7 +42,7 @@ public class StudentService implements IStudentService{
             }
             return studentRepo.save(student);
         }catch (BadRequestException x){
-            LOGGER.info(FORMAT_SPECIFIER_PREFIX, ANSI_BLUE , ERROR_PREFIX ,x.getMessage() , ANSI_RESET);
+            log.info(FORMAT_SPECIFIER_PREFIX, ANSI_BLUE , ERROR_PREFIX ,x.getMessage() , ANSI_RESET);
             return null;
         }
     }
@@ -67,7 +67,7 @@ public class StudentService implements IStudentService{
         }
         catch(userNotFoundException x)
         {
-            LOGGER.info(FORMAT_SPECIFIER_PREFIX, ANSI_BLUE , ERROR_PREFIX ,x.getMessage() , ANSI_RESET);
+            log.info(FORMAT_SPECIFIER_PREFIX, ANSI_BLUE , ERROR_PREFIX ,x.getMessage() , ANSI_RESET);
             throw x;
         }
     }
@@ -78,7 +78,7 @@ public class StudentService implements IStudentService{
                     .orElseThrow(() -> new userNotFoundException("User by id:  " + id + " was not found!"));
         } catch(userNotFoundException x)
         {
-            LOGGER.info(FORMAT_SPECIFIER_PREFIX, ANSI_BLUE , ERROR_PREFIX ,x.getMessage() , ANSI_RESET);
+            log.info(FORMAT_SPECIFIER_PREFIX, ANSI_BLUE , ERROR_PREFIX ,x.getMessage() , ANSI_RESET);
             return null;
         }
     }
@@ -129,7 +129,7 @@ public class StudentService implements IStudentService{
     public Student assignProfessor(Long studentId, Long profId) {
         Student student = studentRepo.findById(studentId).
                 orElseThrow(()-> new userNotFoundException("User by id:  " + studentId +" was not found!"));
-        log.info(ANSI_RED+ student.getProfessors() + ANSI_RESET);
+        log.info(student.getProfessors().toString());
         List<Long> s = student.getProfessors();
         s.add(profId);
         student.setProfessors(s);
@@ -139,6 +139,11 @@ public class StudentService implements IStudentService{
         log.info(ANSI_BLUE+ student.getProfessors() + ANSI_RESET);
         professorService.assignStudent(profId,studentId);
         return studentRepo.save(student);
+    }
+
+    @Override
+    public List<Student> addAll(List<Student> students) {
+        return studentRepo.saveAll(students);
     }
 
 }

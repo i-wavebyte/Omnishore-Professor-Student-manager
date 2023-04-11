@@ -17,5 +17,4 @@ public interface IStudentService {
     Student assignProfessor(Long studentId, Long profId);
     List<Student> addAll(List<Student> students);
 
-    PageResponse<Student> getStudentsPage(int page, int size, String sortBy, String sortOrder, String searchQuery, String subjectFilter);
 }

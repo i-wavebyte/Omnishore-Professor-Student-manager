@@ -72,4 +72,9 @@ public class StudentController {
         return studentService.assignProfessor(studentId, profId);
     }
 
+    @PreAuthorize("hasRole('ROLE_STUD_MANAGER')")
+    @PutMapping("/addAll/{studentId}")
+    public List<Student> addAll(List<Student> students) {
+        return studentService.addAll(students);
+    }
 }

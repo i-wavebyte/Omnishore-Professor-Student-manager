@@ -4,9 +4,7 @@ import backend.server.service.domain.Professor;
 import backend.server.service.domain.ProfessorServiceAuthObject;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -119,23 +117,23 @@ public class ProfessorService implements IProfessorService {
         return response.getBody();
     }
 
-//    @Override
-//    public Professor assignStudent(Long id, Long student) {
-//        String accessToken = getAccessToken();
-//        RestTemplate restTemplate = new RestTemplate();
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setBearerAuth(accessToken);
-//
-//        HttpEntity<?> entity = new HttpEntity<>(headers);
-//        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(uri + "/professorService/assign/{id}")
-//                .queryParam("studentId", student);
-//
-//        ResponseEntity<Professor> response = restTemplate.exchange(
-//                uriBuilder.buildAndExpand(id).toUri(),
-//                HttpMethod.PUT,
-//                entity,
-//                Professor.class);
-//
-//        return response.getBody();
-//    }
+    @Override
+    public Professor assignStudent(Long id, Long student) {
+        String accessToken = getAccessToken();
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(accessToken);
+
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(uri + "/professorService/assign/{id}")
+                .queryParam("studentId", student);
+
+        ResponseEntity<Professor> response = restTemplate.exchange(
+                uriBuilder.buildAndExpand(id).toUri(),
+                HttpMethod.PUT,
+                entity,
+                Professor.class);
+
+        return response.getBody();
+    }
 }
