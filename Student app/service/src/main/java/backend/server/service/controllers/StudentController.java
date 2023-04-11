@@ -34,21 +34,21 @@ public class StudentController {
 
     @PreAuthorize("hasRole('ROLE_STUD_MANAGER')")
     @PutMapping("/update/{id}")
-    public Student updateStudent(@PathVariable long id, @RequestBody Student student) {
-        student.setId(id);
+    public Student updateStudent(@PathVariable("id") long studentId, @RequestBody Student student) {
+        student.setId(studentId);
         return studentService.updateStudent(student);
     }
 
     @PreAuthorize("hasRole('ROLE_STUD_MANAGER')")
     @DeleteMapping("/delete/{id}")
-    public void deleteStudent(@PathVariable long id) {
-        studentService.deleteStudent(id);
+    public void deleteStudent(@PathVariable("id") long studentId) {
+        studentService.deleteStudent(studentId);
     }
 
     @PreAuthorize("hasRole('ROLE_STUD_MANAGER') or hasRole('ROLE_PROF_MANAGER')")
     @GetMapping("/find/{id}")
-    public Student findStudent(@PathVariable long id) {
-        return studentService.findStudent(id);
+    public Student findStudent(@PathVariable("id") long studentId) {
+        return studentService.findStudent(studentId);
     }
 
     @PreAuthorize("hasRole('ROLE_STUD_MANAGER') or hasRole('ROLE_PROF_MANAGER')")
@@ -68,13 +68,8 @@ public class StudentController {
 
     @PreAuthorize("hasRole('ROLE_STUD_MANAGER') or hasRole('ROLE_PROF_MANAGER')")
     @PutMapping("/assignProfessor/{studentId}")
-    public Student assignProfessor(@PathVariable Long studentId, @RequestParam Long profId) {
+    public Student assignProfessor(@PathVariable("studentId") Long studentId, @RequestParam Long profId) {
         return studentService.assignProfessor(studentId, profId);
     }
 
-    @PreAuthorize("hasRole('ROLE_STUD_MANAGER')")
-    @PostMapping("/addAll")
-    public List<Student> addAll(@RequestBody List<Student> students) {
-        return studentService.addAll(students);
-    }
 }

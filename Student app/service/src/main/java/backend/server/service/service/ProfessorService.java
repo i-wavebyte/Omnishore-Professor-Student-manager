@@ -26,39 +26,39 @@ import java.util.stream.Collectors;
 @Slf4j
 @Transactional
 public class ProfessorService implements IProfessorService {
-
     @Value("${backend.app.ProfessorBackend.login}")
     private String username;
     @Value("${backend.app.ProfessorBackend.password}")
     private String password;
     private final String uri = "http://localhost:8080";
-
-    public ProfessorService() {
-
-    }
-
+    public ProfessorService() {}
+    //return a string representing the access token obtained from the remote server
     private String getAccessToken() {
+        //RestTemplate is an object used to send an HTTP request to the remote server
         RestTemplate restTemplate = new RestTemplate();
+        //The ObjectMapper class is part of the Jackson JSON parsing library for Java.It is used to map between JSON and Java objects.
         ObjectMapper objectMapper = new ObjectMapper();
         HttpHeaders headers = new HttpHeaders();
 
         log.info("username: {} ;password: {}", username, password);
+        //construct the user making the request
         ProfessorServiceAuthObject requestBody = new ProfessorServiceAuthObject(username, password);
+        //create a http request entity
         HttpEntity<ProfessorServiceAuthObject> entity = new HttpEntity<>(requestBody, headers);
-
+        //the String.class parameter specifies the type of the response body that is expected from the HTTP request
         ResponseEntity<String> response = restTemplate.exchange(
                 uri + "/api/auth/signin",
                 HttpMethod.POST,
                 entity,
                 String.class
         );
-
         log.info("Response: {}", response.getBody());
         return extractTokenFromResponse(response.getBody(), objectMapper);
     }
 
     private String extractTokenFromResponse(String responseBody, ObjectMapper objectMapper) {
         try {
+            //The readTree method of ObjectMapper is used to parse a JSON string into a JsonNode object, which is a tree representation of the JSON data
             JsonNode jsonNode = objectMapper.readTree(responseBody);
             return jsonNode.get("token").asText();
         } catch (Exception e) {
@@ -84,22 +84,21 @@ public class ProfessorService implements IProfessorService {
         return Arrays.asList(response.getBody());
     }
 
-    @Override
-    public Professor getProfessorById(Long id) {
-        String accessToken = getAccessToken();
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(accessToken);
-
-        HttpEntity<?> entity = new HttpEntity<>(headers);
-        ResponseEntity<Professor> response = restTemplate.exchange(
-                uri + "/professorService/get/" + id,
-                HttpMethod.GET,
-                entity,
-                Professor.class);
-
-        return response.getBody();
-    }
+//    @Override
+//    public Professor getProfessorById(Long id) {
+//        String accessToken = getAccessToken();
+//        RestTemplate restTemplate = new RestTemplate();
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setBearerAuth(accessToken);
+//
+//        HttpEntity<?> entity = new HttpEntity<>(headers);
+//        ResponseEntity<Professor> response = restTemplate.exchange(
+//                uri + "/professorService/get/" + id,
+//                HttpMethod.GET,
+//                entity,
+//                Professor.class);
+//        return response.getBody();
+//    }
 
     @Override
     public List<Professor> getFromIdList(List<Long> ids) {
@@ -117,27 +116,26 @@ public class ProfessorService implements IProfessorService {
                 HttpMethod.GET,
                 entity,
                 new ParameterizedTypeReference<List<Professor>>() {});
-
         return response.getBody();
     }
 
-    @Override
-    public Professor assignStudent(Long id, Long student) {
-        String accessToken = getAccessToken();
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(accessToken);
-
-        HttpEntity<?> entity = new HttpEntity<>(headers);
-        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(uri + "/professorService/assign/{id}")
-                .queryParam("studentId", student);
-
-        ResponseEntity<Professor> response = restTemplate.exchange(
-                uriBuilder.buildAndExpand(id).toUri(),
-                HttpMethod.PUT,
-                entity,
-                Professor.class);
-
-        return response.getBody();
-    }
+//    @Override
+//    public Professor assignStudent(Long id, Long student) {
+//        String accessToken = getAccessToken();
+//        RestTemplate restTemplate = new RestTemplate();
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setBearerAuth(accessToken);
+//
+//        HttpEntity<?> entity = new HttpEntity<>(headers);
+//        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(uri + "/professorService/assign/{id}")
+//                .queryParam("studentId", student);
+//
+//        ResponseEntity<Professor> response = restTemplate.exchange(
+//                uriBuilder.buildAndExpand(id).toUri(),
+//                HttpMethod.PUT,
+//                entity,
+//                Professor.class);
+//
+//        return response.getBody();
+//    }
 }

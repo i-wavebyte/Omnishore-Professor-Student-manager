@@ -18,10 +18,9 @@ public class Student {
     private String email;
     private String telephone;
     private String cin;
-    private String Groupe;
+    private String groupe;
     @ElementCollection
     @CollectionTable(name = "student_professors", joinColumns = @JoinColumn(name = "student_id"))
     @Column(name = "professor_id")
-    private List<Long> professors = new ArrayList<Long>();
-
+    private List<Long> professors = new ArrayList<>();
 }

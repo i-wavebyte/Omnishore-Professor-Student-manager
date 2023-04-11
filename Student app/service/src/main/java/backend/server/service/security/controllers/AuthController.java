@@ -38,7 +38,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 // This is a REST controller that handles user authentication and registration requests
-//codegpt do : generate an importable minified json file to postman for this controller, the root is http://localhost:8080
 @CrossOrigin(origins = "*", maxAge = 3600) // Allow requests from any origin for one hour
 @RestController
 @RequestMapping("/api/auth")

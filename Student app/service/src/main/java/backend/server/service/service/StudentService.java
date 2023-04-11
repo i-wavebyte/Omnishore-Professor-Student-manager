@@ -2,9 +2,12 @@ package backend.server.service.service;
 
 import backend.server.service.domain.PageResponse;
 import backend.server.service.domain.Student;
+import backend.server.service.exception.BadRequestException;
 import backend.server.service.exception.userNotFoundException;
 import backend.server.service.repositories.StudentRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -13,13 +16,14 @@ import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
-//codegpt do: generate a controller for this service set crossOrigin to * with a max age of 3600, and the request mapping to /studentService
 @Service @Transactional @Slf4j
 public class StudentService implements IStudentService{
 
     public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_BLUE = "\u001B[34m";
+    static final  String ERROR_PREFIX = "Error: ";
+    // using format specifiers instead of concatenation
+    static final String FORMAT_SPECIFIER_PREFIX = "{}{}{}{}";
 
     @Autowired
     private  IProfessorService professorService;
@@ -31,10 +35,20 @@ public class StudentService implements IStudentService{
     }
     public Student addStudent(Student student)
     {
-        return studentRepo.save(student);
+        try {
+            boolean existEmail = studentRepo.existsByEmail(student.getEmail());
+            if (existEmail) {
+                throw new BadRequestException("Email " + student.getEmail() + " Already taken");
+            }
+            return studentRepo.save(student);
+        }catch (BadRequestException x){
+            LOGGER.info(FORMAT_SPECIFIER_PREFIX, ANSI_BLUE , ERROR_PREFIX ,x.getMessage() , ANSI_RESET);
+            return null;
+        }
     }
 
-    public List<Student> findAllStudents(){
+    public List<Student> findAllStudents()
+    {
         return studentRepo.findAll();
     }
 
@@ -42,14 +56,31 @@ public class StudentService implements IStudentService{
         return studentRepo.save(student);
     }
 
-    public void deleteStudent(long id)
+    public void deleteStudent(long studentId)
     {
-        studentRepo.deleteById(id);
+        try {
+            if (!studentRepo.existsById(studentId))
+            {
+                throw new userNotFoundException("User by id: "+ studentId+ " doesn't exist !");
+            }
+            studentRepo.deleteById(studentId);
+        }
+        catch(userNotFoundException x)
+        {
+            LOGGER.info(FORMAT_SPECIFIER_PREFIX, ANSI_BLUE , ERROR_PREFIX ,x.getMessage() , ANSI_RESET);
+            throw x;
+        }
     }
 
     public Student findStudent(long id){
-        return studentRepo.findStudentById(id)
-                .orElseThrow(()-> new userNotFoundException("User by id:  " + id +" was not found!"));
+        try {
+            return studentRepo.findById(id)
+                    .orElseThrow(() -> new userNotFoundException("User by id:  " + id + " was not found!"));
+        } catch(userNotFoundException x)
+        {
+            LOGGER.info(FORMAT_SPECIFIER_PREFIX, ANSI_BLUE , ERROR_PREFIX ,x.getMessage() , ANSI_RESET);
+            return null;
+        }
     }
 
     @Override
@@ -96,7 +127,7 @@ public class StudentService implements IStudentService{
 
 
     public Student assignProfessor(Long studentId, Long profId) {
-        Student student = studentRepo.findStudentById(studentId).
+        Student student = studentRepo.findById(studentId).
                 orElseThrow(()-> new userNotFoundException("User by id:  " + studentId +" was not found!"));
         log.info(ANSI_RED+ student.getProfessors() + ANSI_RESET);
         List<Long> s = student.getProfessors();
@@ -108,37 +139,6 @@ public class StudentService implements IStudentService{
         log.info(ANSI_BLUE+ student.getProfessors() + ANSI_RESET);
         professorService.assignStudent(profId,studentId);
         return studentRepo.save(student);
-
     }
 
-    public List<Student> addAll(List<Student> students){
-        return studentRepo.saveAll(students);
-    }
-
-    @Override
-    public PageResponse<Student> getStudentsPage(int page, int size, String sortBy, String sortOrder, String searchQuery, String groupeFilter) {
-        Sort.Direction direction = Sort.Direction.fromString(sortOrder);
-        Sort sort = Sort.by(direction, sortBy);
-        int start = page * size;
-        int end = Math.min(start + size, (int) studentRepo.count());
-
-        List<Student> students = studentRepo.findAll(sort);
-
-        if (searchQuery != null && !searchQuery.isEmpty()) {
-            students = students.stream()
-                    .filter(professor -> professor.getName().toLowerCase().contains(searchQuery.toLowerCase())
-                            || professor.getCin().toLowerCase().contains(searchQuery.toLowerCase())
-                            || professor.getEmail().toLowerCase().contains(searchQuery.toLowerCase())
-                            || professor.getTelephone().toLowerCase().contains(searchQuery.toLowerCase()))
-                    .toList();
-        }
-        if (groupeFilter != null && !groupeFilter.isEmpty()) {
-            students = students.stream()
-                    .filter(professor -> professor.getGroupe().equalsIgnoreCase(groupeFilter))
-                    .toList();
-        }
-
-        List<Student> pageContent = students.subList(start, Math.min(end, students.size()));
-        return new PageResponse<>(pageContent, students.size());
-    }
 }

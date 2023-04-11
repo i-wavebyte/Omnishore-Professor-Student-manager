@@ -27,19 +27,19 @@ public class ProfessorController {
     public ResponseEntity<List<Professor>> getAllProfessors() {
         return ResponseEntity.ok(professorService.getAllProfessors());
     }
-    @PreAuthorize("hasRole('ROLE_STUD_MANAGER')")
-    @GetMapping("/get/{id}")
-    public ResponseEntity<Professor> getProfessorById(@PathVariable Long id) {
-        return ResponseEntity.ok(professorService.getProfessorById(id));
-    }
+//    @PreAuthorize("hasRole('ROLE_STUD_MANAGER')")
+//    @GetMapping("/get/{id}")
+//    public ResponseEntity<Professor> getProfessorById(@PathVariable Long id) {
+//        return ResponseEntity.ok(professorService.getProfessorById(id));
+//    }
     @PreAuthorize("hasRole('ROLE_STUD_MANAGER')")
     @GetMapping("/get/list")
     public ResponseEntity<List<Professor>> getFromIdList(@RequestParam List<Long> profIds) {
         return ResponseEntity.ok(professorService.getFromIdList(profIds));
     }
-    @PreAuthorize("hasRole('ROLE_STUD_MANAGER')")
-    @PutMapping("/assign/{id}")
-    public ResponseEntity<Professor> assignStudent(@PathVariable Long id, @RequestParam Long studentId) {
-        return ResponseEntity.ok(professorService.assignStudent(id, studentId));
-    }
+//    @PreAuthorize("hasRole('ROLE_STUD_MANAGER')")
+//    @PutMapping("/assign/{id}")
+//    public ResponseEntity<Professor> assignStudent(@PathVariable Long id, @RequestParam Long studentId) {
+//        return ResponseEntity.ok(professorService.assignStudent(id, studentId));
+//    }
 }
